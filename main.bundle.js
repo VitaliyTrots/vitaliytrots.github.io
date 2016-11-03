@@ -26946,8 +26946,9 @@ var InputDataComponent = (function () {
         });
     };
     InputDataComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getData();
-        // this.onSelect(this.dataAr[0]);
+        setTimeout(function () { return _this.onSelect(_this.dataset[0]); }, 0);
     };
     InputDataComponent.prototype.onSelect = function (rec) {
         this.selectedRec = rec;
