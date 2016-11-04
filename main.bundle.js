@@ -20026,11 +20026,6 @@ var Auth = (function () {
         this.changeUser();
     };
     ;
-    Auth.prototype.getUserRole = function () {
-        if (this.userProfile == undefined)
-            return -1;
-        return this.userProfile["role"] == "admin" ? 1 : this.userProfile["role"] == "user" ? 0 : -1;
-    };
     return Auth;
 }());
 //# sourceMappingURL=/home/vs/Work/my-app/src/auth.service.js.map
