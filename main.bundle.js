@@ -19983,7 +19983,7 @@ var Auth = (function () {
         var _this = this;
         // Observable user role
         this.userRole = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
-        this.userRole$ = this.userRole.asObservable();
+        this.userRole1$ = this.userRole.asObservable();
         // Configure Auth0
         this.lock = new Auth0Lock('HzkLleYJ3Js0h5rz3pEVOHffcc32Atkr', 'vitaliy.eu.auth0.com', { closable: false });
         // Set userProfile attribute of already saved profile
@@ -26952,7 +26952,7 @@ var InputDataComponent = (function () {
         var _this = this;
         this.dataService = dataService;
         this.auth = auth;
-        this.subscription = auth.userRole$.subscribe(function (role) { return _this.editable = role; });
+        this.subscription = auth.userRole1$.subscribe(function (role) { return _this.editable = role; });
         auth.changeUser();
         // this.editable = auth.getUserRole();
         // console.log(JSON.parse(localStorage.getItem('profile')));
