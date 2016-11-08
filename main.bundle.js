@@ -20087,7 +20087,8 @@ var DataService = (function () {
             no = rec.no + 1;
         }
         return this.http
-            .post(this.dataUrl, JSON.stringify({ no: no,
+            .post(this.dataUrl, JSON.stringify({
+            no: no,
             date: rec.date,
             car: rec.car,
             driver: rec.driver,
@@ -27019,6 +27020,7 @@ var ViewDataComponent = (function () {
         this.salaries = [];
         this.costs = [];
         this.moneys = [];
+        this.curSortField = "";
         this.filter = {
             no: -1,
             date: "",
@@ -27042,78 +27044,153 @@ var ViewDataComponent = (function () {
         });
     };
     ViewDataComponent.prototype.filterInitialization = function () {
-        for (var c = 0; c < this.dataset.length; c++) {
-            if (this.noms.indexOf(this.dataset[c].no) === -1) {
-                this.noms.push(this.dataset[c].no);
-            }
-            if (this.dates.indexOf(this.dataset[c].date) === -1) {
-                this.dates.push(this.dataset[c].date);
-            }
-            if (this.cars.indexOf(this.dataset[c].car) === -1) {
-                this.cars.push(this.dataset[c].car);
-            }
-            if (this.drivers.indexOf(this.dataset[c].driver) === -1) {
-                this.drivers.push(this.dataset[c].driver);
-            }
-            if (this.weights.indexOf(this.dataset[c].weight) === -1) {
-                this.weights.push(this.dataset[c].weight);
-            }
-            if (this.kms.indexOf(this.dataset[c].km) === -1) {
-                this.kms.push(this.dataset[c].km);
-            }
-            if (this.workTimes.indexOf(this.dataset[c].workTime) === -1) {
-                this.workTimes.push(this.dataset[c].workTime);
-            }
-            if (this.fuels.indexOf(this.dataset[c].fuel) === -1) {
-                this.fuels.push(this.dataset[c].fuel);
-            }
-            if (this.salaries.indexOf(this.dataset[c].salary) === -1) {
-                this.salaries.push(this.dataset[c].salary);
-            }
-            if (this.costs.indexOf(this.dataset[c].cost) === -1) {
-                this.costs.push(this.dataset[c].cost);
-            }
-            if (this.moneys.indexOf(this.dataset[c].money) === -1) {
-                this.moneys.push(this.dataset[c].money);
-            }
-        }
-        this.noms.sort(function (a, b) { return a - b; });
-        this.dates.sort();
-        this.cars.sort();
-        this.drivers.sort();
-        this.weights.sort(function (a, b) { return a - b; });
-        this.kms.sort(function (a, b) { return a - b; });
-        this.workTimes.sort(function (a, b) { return a - b; });
-        this.fuels.sort(function (a, b) { return a - b; });
-        this.salaries.sort(function (a, b) { return a - b; });
-        this.costs.sort(function (a, b) { return a - b; });
-        this.moneys.sort(function (a, b) { return a - b; });
-    };
-    ViewDataComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.getData();
-        //initialization filters
         setTimeout(function () {
-            _this.filterInitialization();
+            //filter's cleaning
+            _this.noms = [];
+            _this.dates = [];
+            _this.cars = [];
+            _this.drivers = [];
+            _this.weights = [];
+            _this.kms = [];
+            _this.workTimes = [];
+            _this.fuels = [];
+            _this.salaries = [];
+            _this.costs = [];
+            _this.moneys = [];
+            //filter's filling
+            for (var c = 0; c < _this.dataset.length; c++) {
+                console.log(_this.dataset[c].driver);
+                if (_this.noms.indexOf(_this.dataset[c].no) === -1) {
+                    _this.noms.push(_this.dataset[c].no);
+                }
+                if (_this.dates.indexOf(_this.dataset[c].date) === -1) {
+                    _this.dates.push(_this.dataset[c].date);
+                }
+                if (_this.cars.indexOf(_this.dataset[c].car) === -1) {
+                    _this.cars.push(_this.dataset[c].car);
+                }
+                if (_this.drivers.indexOf(_this.dataset[c].driver) === -1) {
+                    _this.drivers.push(_this.dataset[c].driver);
+                }
+                if (_this.weights.indexOf(_this.dataset[c].weight) === -1) {
+                    _this.weights.push(_this.dataset[c].weight);
+                }
+                if (_this.kms.indexOf(_this.dataset[c].km) === -1) {
+                    _this.kms.push(_this.dataset[c].km);
+                }
+                if (_this.workTimes.indexOf(_this.dataset[c].workTime) === -1) {
+                    _this.workTimes.push(_this.dataset[c].workTime);
+                }
+                if (_this.fuels.indexOf(_this.dataset[c].fuel) === -1) {
+                    _this.fuels.push(_this.dataset[c].fuel);
+                }
+                if (_this.salaries.indexOf(_this.dataset[c].salary) === -1) {
+                    _this.salaries.push(_this.dataset[c].salary);
+                }
+                if (_this.costs.indexOf(_this.dataset[c].cost) === -1) {
+                    _this.costs.push(_this.dataset[c].cost);
+                }
+                if (_this.moneys.indexOf(_this.dataset[c].money) === -1) {
+                    _this.moneys.push(_this.dataset[c].money);
+                }
+            }
+            //filter's sorting
+            _this.noms.sort(function (a, b) { return a - b; });
+            _this.dates.sort();
+            _this.cars.sort();
+            _this.drivers.sort();
+            _this.weights.sort(function (a, b) { return a - b; });
+            _this.kms.sort(function (a, b) { return a - b; });
+            _this.workTimes.sort(function (a, b) { return a - b; });
+            _this.fuels.sort(function (a, b) { return a - b; });
+            _this.salaries.sort(function (a, b) { return a - b; });
+            _this.costs.sort(function (a, b) { return a - b; });
+            _this.moneys.sort(function (a, b) { return a - b; });
         }, 0);
     };
+    ViewDataComponent.prototype.ngOnInit = function () {
+        this.getData();
+        //initialization filters
+        this.filterInitialization();
+    };
     ViewDataComponent.prototype.sort = function (by) {
-        if (by == "no") {
-            this.dataset.sort(function (a, b) { return a.no - b.no; });
-        }
-        else if (by == "date" || by == "car" || by == "driver") {
-            this.dataset.sort(function (a, b) { return a[by].localeCompare(b[by]) || (a.no - b.no); });
+        if (this.curSortField === by) {
+            this.dataset.sort(function (a, b) {
+                if (a[by].localeCompare) {
+                    return b[by].localeCompare(a[by]) || (b.no - a.no);
+                }
+                else {
+                    return (b[by] - a[by]) || (b.no - a.no);
+                }
+            });
+            this.curSortField = "";
         }
         else {
-            this.dataset.sort(function (a, b) { return (a[by] - b[by]) || (a.no - b.no); });
+            this.dataset.sort(function (a, b) {
+                if (a[by].localeCompare) {
+                    return a[by].localeCompare(b[by]) || (a.no - b.no);
+                }
+                else {
+                    return (a[by] - b[by]) || (a.no - b.no);
+                }
+            });
+            this.curSortField = by;
         }
     };
     ViewDataComponent.prototype.show = function () {
         console.log(this.filter);
     };
-    ViewDataComponent.prototype.onFilter = function () {
+    ViewDataComponent.prototype.clearFilter = function (by) {
+        var _this = this;
+        this.getData();
+        setTimeout(function () {
+            if (by !== "no" && +_this.filter.no !== -1) {
+                _this.onFilter("no");
+            }
+            if (by !== "date" && _this.filter.date !== "") {
+                _this.onFilter("date");
+            }
+            if (by !== "car" && _this.filter.car !== "") {
+                _this.onFilter("car");
+            }
+            if (by !== "driver" && _this.filter.driver !== "") {
+                _this.onFilter("driver");
+            }
+            if (by !== "weight" && +_this.filter.weight !== -1) {
+                _this.onFilter("weight");
+            }
+            if (by !== "km" && +_this.filter.km !== -1) {
+                _this.onFilter("km");
+            }
+            if (by !== "workTime" && +_this.filter.workTime !== -1) {
+                _this.onFilter("workTime");
+            }
+            if (by !== "fuel" && +_this.filter.fuel !== -1) {
+                _this.onFilter("fuel");
+            }
+            if (by !== "salary" && +_this.filter.salary !== -1) {
+                _this.onFilter("salary");
+            }
+            if (by !== "cost" && +_this.filter.cost !== -1) {
+                _this.onFilter("cost");
+            }
+            if (by !== "money" && +_this.filter.money !== -1) {
+                _this.onFilter("money");
+            }
+        }, 0);
+    };
+    ViewDataComponent.prototype.onFilter = function (by) {
+        var _this = this;
         //todo filtering dataset
-        this.show();
+        if (this.filter[by] === "" || +this.filter[by] === -1) {
+            //сброс фильтра
+            this.clearFilter(by);
+        }
+        else {
+            this.dataset = this.dataset.filter(function (val) { return val[by] === _this.filter[by]; });
+        }
+        this.filterInitialization();
     };
     return ViewDataComponent;
 }());
@@ -39991,7 +40068,7 @@ var InMemoryDataService = (function () {
  * Do not edit.
  */
 /* tslint:disable */
-var styles = ['.table[_ngcontent-%COMP%] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n}\n.tablehead[_ngcontent-%COMP%] {\n    display: block;\n}\n.tablebody[_ngcontent-%COMP%] {\n    height: 216px;\n    overflow-y: auto;\n    display: block;\n}\n.tablerow[_ngcontent-%COMP%] {\n    cursor: pointer;\n}\n.tablerow[_ngcontent-%COMP%]:hover {\n    background-color: #EEE;\n}\n.selected[_ngcontent-%COMP%] {\n    background-color: #BBB;\n}'];
+var styles = ['.table[_ngcontent-%COMP%] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n}\n.tablehead[_ngcontent-%COMP%] {\n    display: block;\n}\n.tablebody[_ngcontent-%COMP%] {\n    height: 218px;\n    overflow-y: auto;\n    display: block;\n}\n.tablerow[_ngcontent-%COMP%] {\n    cursor: pointer;\n}\n.tablerow[_ngcontent-%COMP%]:hover {\n    background-color: #EEE;\n}\n.selected[_ngcontent-%COMP%] {\n    background-color: #BBB;\n}'];
 //# sourceMappingURL=/home/vs/Work/my-app/src/input-data.component.css.shim.js.map
 
 /***/ },
@@ -40966,57 +41043,67 @@ var _View_ViewDataComponent0 = (function (_super) {
         var disposable_3 = this.renderer.listen(this._el_1, 'blur', this.eventHandler(this._handle_blur_1_3.bind(this)));
         var subscription_0 = this._NgModel_1_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_1_0.bind(this)));
         var disposable_4 = this.renderer.listen(this._el_9, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_9_0.bind(this)));
-        var disposable_5 = this.renderer.listen(this._el_9, 'change', this.eventHandler(this._handle_change_9_1.bind(this)));
-        var disposable_6 = this.renderer.listen(this._el_9, 'blur', this.eventHandler(this._handle_blur_9_2.bind(this)));
+        var disposable_5 = this.renderer.listen(this._el_9, 'click', this.eventHandler(this._handle_click_9_1.bind(this)));
+        var disposable_6 = this.renderer.listen(this._el_9, 'change', this.eventHandler(this._handle_change_9_2.bind(this)));
+        var disposable_7 = this.renderer.listen(this._el_9, 'blur', this.eventHandler(this._handle_blur_9_3.bind(this)));
         var subscription_1 = this._NgModel_9_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_9_0.bind(this)));
-        var disposable_7 = this.renderer.listen(this._el_17, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_17_0.bind(this)));
-        var disposable_8 = this.renderer.listen(this._el_17, 'change', this.eventHandler(this._handle_change_17_1.bind(this)));
-        var disposable_9 = this.renderer.listen(this._el_17, 'blur', this.eventHandler(this._handle_blur_17_2.bind(this)));
+        var disposable_8 = this.renderer.listen(this._el_17, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_17_0.bind(this)));
+        var disposable_9 = this.renderer.listen(this._el_17, 'click', this.eventHandler(this._handle_click_17_1.bind(this)));
+        var disposable_10 = this.renderer.listen(this._el_17, 'change', this.eventHandler(this._handle_change_17_2.bind(this)));
+        var disposable_11 = this.renderer.listen(this._el_17, 'blur', this.eventHandler(this._handle_blur_17_3.bind(this)));
         var subscription_2 = this._NgModel_17_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_17_0.bind(this)));
-        var disposable_10 = this.renderer.listen(this._el_25, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_25_0.bind(this)));
-        var disposable_11 = this.renderer.listen(this._el_25, 'change', this.eventHandler(this._handle_change_25_1.bind(this)));
-        var disposable_12 = this.renderer.listen(this._el_25, 'blur', this.eventHandler(this._handle_blur_25_2.bind(this)));
+        var disposable_12 = this.renderer.listen(this._el_25, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_25_0.bind(this)));
+        var disposable_13 = this.renderer.listen(this._el_25, 'click', this.eventHandler(this._handle_click_25_1.bind(this)));
+        var disposable_14 = this.renderer.listen(this._el_25, 'change', this.eventHandler(this._handle_change_25_2.bind(this)));
+        var disposable_15 = this.renderer.listen(this._el_25, 'blur', this.eventHandler(this._handle_blur_25_3.bind(this)));
         var subscription_3 = this._NgModel_25_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_25_0.bind(this)));
-        var disposable_13 = this.renderer.listen(this._el_33, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_33_0.bind(this)));
-        var disposable_14 = this.renderer.listen(this._el_33, 'change', this.eventHandler(this._handle_change_33_1.bind(this)));
-        var disposable_15 = this.renderer.listen(this._el_33, 'blur', this.eventHandler(this._handle_blur_33_2.bind(this)));
+        var disposable_16 = this.renderer.listen(this._el_33, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_33_0.bind(this)));
+        var disposable_17 = this.renderer.listen(this._el_33, 'click', this.eventHandler(this._handle_click_33_1.bind(this)));
+        var disposable_18 = this.renderer.listen(this._el_33, 'change', this.eventHandler(this._handle_change_33_2.bind(this)));
+        var disposable_19 = this.renderer.listen(this._el_33, 'blur', this.eventHandler(this._handle_blur_33_3.bind(this)));
         var subscription_4 = this._NgModel_33_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_33_0.bind(this)));
-        var disposable_16 = this.renderer.listen(this._el_41, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_41_0.bind(this)));
-        var disposable_17 = this.renderer.listen(this._el_41, 'change', this.eventHandler(this._handle_change_41_1.bind(this)));
-        var disposable_18 = this.renderer.listen(this._el_41, 'blur', this.eventHandler(this._handle_blur_41_2.bind(this)));
+        var disposable_20 = this.renderer.listen(this._el_41, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_41_0.bind(this)));
+        var disposable_21 = this.renderer.listen(this._el_41, 'click', this.eventHandler(this._handle_click_41_1.bind(this)));
+        var disposable_22 = this.renderer.listen(this._el_41, 'change', this.eventHandler(this._handle_change_41_2.bind(this)));
+        var disposable_23 = this.renderer.listen(this._el_41, 'blur', this.eventHandler(this._handle_blur_41_3.bind(this)));
         var subscription_5 = this._NgModel_41_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_41_0.bind(this)));
-        var disposable_19 = this.renderer.listen(this._el_49, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_49_0.bind(this)));
-        var disposable_20 = this.renderer.listen(this._el_49, 'change', this.eventHandler(this._handle_change_49_1.bind(this)));
-        var disposable_21 = this.renderer.listen(this._el_49, 'blur', this.eventHandler(this._handle_blur_49_2.bind(this)));
+        var disposable_24 = this.renderer.listen(this._el_49, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_49_0.bind(this)));
+        var disposable_25 = this.renderer.listen(this._el_49, 'click', this.eventHandler(this._handle_click_49_1.bind(this)));
+        var disposable_26 = this.renderer.listen(this._el_49, 'change', this.eventHandler(this._handle_change_49_2.bind(this)));
+        var disposable_27 = this.renderer.listen(this._el_49, 'blur', this.eventHandler(this._handle_blur_49_3.bind(this)));
         var subscription_6 = this._NgModel_49_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_49_0.bind(this)));
-        var disposable_22 = this.renderer.listen(this._el_57, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_57_0.bind(this)));
-        var disposable_23 = this.renderer.listen(this._el_57, 'change', this.eventHandler(this._handle_change_57_1.bind(this)));
-        var disposable_24 = this.renderer.listen(this._el_57, 'blur', this.eventHandler(this._handle_blur_57_2.bind(this)));
+        var disposable_28 = this.renderer.listen(this._el_57, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_57_0.bind(this)));
+        var disposable_29 = this.renderer.listen(this._el_57, 'click', this.eventHandler(this._handle_click_57_1.bind(this)));
+        var disposable_30 = this.renderer.listen(this._el_57, 'change', this.eventHandler(this._handle_change_57_2.bind(this)));
+        var disposable_31 = this.renderer.listen(this._el_57, 'blur', this.eventHandler(this._handle_blur_57_3.bind(this)));
         var subscription_7 = this._NgModel_57_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_57_0.bind(this)));
-        var disposable_25 = this.renderer.listen(this._el_65, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_65_0.bind(this)));
-        var disposable_26 = this.renderer.listen(this._el_65, 'change', this.eventHandler(this._handle_change_65_1.bind(this)));
-        var disposable_27 = this.renderer.listen(this._el_65, 'blur', this.eventHandler(this._handle_blur_65_2.bind(this)));
+        var disposable_32 = this.renderer.listen(this._el_65, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_65_0.bind(this)));
+        var disposable_33 = this.renderer.listen(this._el_65, 'click', this.eventHandler(this._handle_click_65_1.bind(this)));
+        var disposable_34 = this.renderer.listen(this._el_65, 'change', this.eventHandler(this._handle_change_65_2.bind(this)));
+        var disposable_35 = this.renderer.listen(this._el_65, 'blur', this.eventHandler(this._handle_blur_65_3.bind(this)));
         var subscription_8 = this._NgModel_65_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_65_0.bind(this)));
-        var disposable_28 = this.renderer.listen(this._el_73, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_73_0.bind(this)));
-        var disposable_29 = this.renderer.listen(this._el_73, 'change', this.eventHandler(this._handle_change_73_1.bind(this)));
-        var disposable_30 = this.renderer.listen(this._el_73, 'blur', this.eventHandler(this._handle_blur_73_2.bind(this)));
+        var disposable_36 = this.renderer.listen(this._el_73, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_73_0.bind(this)));
+        var disposable_37 = this.renderer.listen(this._el_73, 'click', this.eventHandler(this._handle_click_73_1.bind(this)));
+        var disposable_38 = this.renderer.listen(this._el_73, 'change', this.eventHandler(this._handle_change_73_2.bind(this)));
+        var disposable_39 = this.renderer.listen(this._el_73, 'blur', this.eventHandler(this._handle_blur_73_3.bind(this)));
         var subscription_9 = this._NgModel_73_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_73_0.bind(this)));
-        var disposable_31 = this.renderer.listen(this._el_81, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_81_0.bind(this)));
-        var disposable_32 = this.renderer.listen(this._el_81, 'change', this.eventHandler(this._handle_change_81_1.bind(this)));
-        var disposable_33 = this.renderer.listen(this._el_81, 'blur', this.eventHandler(this._handle_blur_81_2.bind(this)));
+        var disposable_40 = this.renderer.listen(this._el_81, 'ngModelChange', this.eventHandler(this._handle_ngModelChange_81_0.bind(this)));
+        var disposable_41 = this.renderer.listen(this._el_81, 'click', this.eventHandler(this._handle_click_81_1.bind(this)));
+        var disposable_42 = this.renderer.listen(this._el_81, 'change', this.eventHandler(this._handle_change_81_2.bind(this)));
+        var disposable_43 = this.renderer.listen(this._el_81, 'blur', this.eventHandler(this._handle_blur_81_3.bind(this)));
         var subscription_10 = this._NgModel_81_5.context.update.subscribe(this.eventHandler(this._handle_ngModelChange_81_0.bind(this)));
-        var disposable_34 = this.renderer.listen(this._el_95, 'click', this.eventHandler(this._handle_click_95_0.bind(this)));
-        var disposable_35 = this.renderer.listen(this._el_98, 'click', this.eventHandler(this._handle_click_98_0.bind(this)));
-        var disposable_36 = this.renderer.listen(this._el_101, 'click', this.eventHandler(this._handle_click_101_0.bind(this)));
-        var disposable_37 = this.renderer.listen(this._el_104, 'click', this.eventHandler(this._handle_click_104_0.bind(this)));
-        var disposable_38 = this.renderer.listen(this._el_107, 'click', this.eventHandler(this._handle_click_107_0.bind(this)));
-        var disposable_39 = this.renderer.listen(this._el_112, 'click', this.eventHandler(this._handle_click_112_0.bind(this)));
-        var disposable_40 = this.renderer.listen(this._el_117, 'click', this.eventHandler(this._handle_click_117_0.bind(this)));
-        var disposable_41 = this.renderer.listen(this._el_122, 'click', this.eventHandler(this._handle_click_122_0.bind(this)));
-        var disposable_42 = this.renderer.listen(this._el_127, 'click', this.eventHandler(this._handle_click_127_0.bind(this)));
-        var disposable_43 = this.renderer.listen(this._el_132, 'click', this.eventHandler(this._handle_click_132_0.bind(this)));
-        var disposable_44 = this.renderer.listen(this._el_137, 'click', this.eventHandler(this._handle_click_137_0.bind(this)));
-        var disposable_45 = this.renderer.listen(this._el_150, 'click', this.eventHandler(this._handle_click_150_0.bind(this)));
+        var disposable_44 = this.renderer.listen(this._el_95, 'click', this.eventHandler(this._handle_click_95_0.bind(this)));
+        var disposable_45 = this.renderer.listen(this._el_98, 'click', this.eventHandler(this._handle_click_98_0.bind(this)));
+        var disposable_46 = this.renderer.listen(this._el_101, 'click', this.eventHandler(this._handle_click_101_0.bind(this)));
+        var disposable_47 = this.renderer.listen(this._el_104, 'click', this.eventHandler(this._handle_click_104_0.bind(this)));
+        var disposable_48 = this.renderer.listen(this._el_107, 'click', this.eventHandler(this._handle_click_107_0.bind(this)));
+        var disposable_49 = this.renderer.listen(this._el_112, 'click', this.eventHandler(this._handle_click_112_0.bind(this)));
+        var disposable_50 = this.renderer.listen(this._el_117, 'click', this.eventHandler(this._handle_click_117_0.bind(this)));
+        var disposable_51 = this.renderer.listen(this._el_122, 'click', this.eventHandler(this._handle_click_122_0.bind(this)));
+        var disposable_52 = this.renderer.listen(this._el_127, 'click', this.eventHandler(this._handle_click_127_0.bind(this)));
+        var disposable_53 = this.renderer.listen(this._el_132, 'click', this.eventHandler(this._handle_click_132_0.bind(this)));
+        var disposable_54 = this.renderer.listen(this._el_137, 'click', this.eventHandler(this._handle_click_137_0.bind(this)));
+        var disposable_55 = this.renderer.listen(this._el_150, 'click', this.eventHandler(this._handle_click_150_0.bind(this)));
         this.init([], [
             this._text_0,
             this._el_1,
@@ -41217,7 +41304,17 @@ var _View_ViewDataComponent0 = (function (_super) {
             disposable_42,
             disposable_43,
             disposable_44,
-            disposable_45
+            disposable_45,
+            disposable_46,
+            disposable_47,
+            disposable_48,
+            disposable_49,
+            disposable_50,
+            disposable_51,
+            disposable_52,
+            disposable_53,
+            disposable_54,
+            disposable_55
         ], [
             subscription_0,
             subscription_1,
@@ -41819,7 +41916,7 @@ var _View_ViewDataComponent0 = (function (_super) {
     };
     _View_ViewDataComponent0.prototype._handle_click_1_1 = function ($event) {
         this.markPathToRootAsCheckOnce();
-        var pd_1_0 = (this.context.onFilter() !== false);
+        var pd_1_0 = (this.context.onFilter('no') !== false);
         return (true && pd_1_0);
     };
     _View_ViewDataComponent0.prototype._handle_change_1_2 = function ($event) {
@@ -41837,12 +41934,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_9_0 = ((this.context.filter.date = $event) !== false);
         return (true && pd_9_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_9_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_9_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_9_0 = (this.context.onFilter('date') !== false);
+        return (true && pd_9_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_9_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_9_0 = (this._SelectControlValueAccessor_9_3.context.onChange($event.target.value) !== false);
         return (true && pd_9_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_9_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_9_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_9_0 = (this._SelectControlValueAccessor_9_3.context.onTouched() !== false);
         return (true && pd_9_0);
@@ -41852,12 +41954,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_17_0 = ((this.context.filter.car = $event) !== false);
         return (true && pd_17_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_17_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_17_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_17_0 = (this.context.onFilter('car') !== false);
+        return (true && pd_17_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_17_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_17_0 = (this._SelectControlValueAccessor_17_3.context.onChange($event.target.value) !== false);
         return (true && pd_17_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_17_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_17_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_17_0 = (this._SelectControlValueAccessor_17_3.context.onTouched() !== false);
         return (true && pd_17_0);
@@ -41867,12 +41974,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_25_0 = ((this.context.filter.driver = $event) !== false);
         return (true && pd_25_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_25_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_25_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_25_0 = (this.context.onFilter('driver') !== false);
+        return (true && pd_25_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_25_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_25_0 = (this._SelectControlValueAccessor_25_3.context.onChange($event.target.value) !== false);
         return (true && pd_25_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_25_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_25_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_25_0 = (this._SelectControlValueAccessor_25_3.context.onTouched() !== false);
         return (true && pd_25_0);
@@ -41882,12 +41994,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_33_0 = ((this.context.filter.weight = $event) !== false);
         return (true && pd_33_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_33_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_33_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_33_0 = (this.context.onFilter('weight') !== false);
+        return (true && pd_33_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_33_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_33_0 = (this._SelectControlValueAccessor_33_3.context.onChange($event.target.value) !== false);
         return (true && pd_33_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_33_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_33_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_33_0 = (this._SelectControlValueAccessor_33_3.context.onTouched() !== false);
         return (true && pd_33_0);
@@ -41897,12 +42014,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_41_0 = ((this.context.filter.km = $event) !== false);
         return (true && pd_41_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_41_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_41_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_41_0 = (this.context.onFilter('km') !== false);
+        return (true && pd_41_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_41_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_41_0 = (this._SelectControlValueAccessor_41_3.context.onChange($event.target.value) !== false);
         return (true && pd_41_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_41_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_41_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_41_0 = (this._SelectControlValueAccessor_41_3.context.onTouched() !== false);
         return (true && pd_41_0);
@@ -41912,12 +42034,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_49_0 = ((this.context.filter.workTime = $event) !== false);
         return (true && pd_49_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_49_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_49_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_49_0 = (this.context.onFilter('workTime') !== false);
+        return (true && pd_49_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_49_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_49_0 = (this._SelectControlValueAccessor_49_3.context.onChange($event.target.value) !== false);
         return (true && pd_49_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_49_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_49_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_49_0 = (this._SelectControlValueAccessor_49_3.context.onTouched() !== false);
         return (true && pd_49_0);
@@ -41927,12 +42054,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_57_0 = ((this.context.filter.fuel = $event) !== false);
         return (true && pd_57_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_57_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_57_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_57_0 = (this.context.onFilter('fuel') !== false);
+        return (true && pd_57_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_57_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_57_0 = (this._SelectControlValueAccessor_57_3.context.onChange($event.target.value) !== false);
         return (true && pd_57_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_57_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_57_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_57_0 = (this._SelectControlValueAccessor_57_3.context.onTouched() !== false);
         return (true && pd_57_0);
@@ -41942,12 +42074,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_65_0 = ((this.context.filter.salary = $event) !== false);
         return (true && pd_65_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_65_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_65_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_65_0 = (this.context.onFilter('salary') !== false);
+        return (true && pd_65_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_65_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_65_0 = (this._SelectControlValueAccessor_65_3.context.onChange($event.target.value) !== false);
         return (true && pd_65_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_65_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_65_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_65_0 = (this._SelectControlValueAccessor_65_3.context.onTouched() !== false);
         return (true && pd_65_0);
@@ -41957,12 +42094,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_73_0 = ((this.context.filter.cost = $event) !== false);
         return (true && pd_73_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_73_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_73_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_73_0 = (this.context.onFilter('cost') !== false);
+        return (true && pd_73_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_73_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_73_0 = (this._SelectControlValueAccessor_73_3.context.onChange($event.target.value) !== false);
         return (true && pd_73_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_73_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_73_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_73_0 = (this._SelectControlValueAccessor_73_3.context.onTouched() !== false);
         return (true && pd_73_0);
@@ -41972,12 +42114,17 @@ var _View_ViewDataComponent0 = (function (_super) {
         var pd_81_0 = ((this.context.filter.money = $event) !== false);
         return (true && pd_81_0);
     };
-    _View_ViewDataComponent0.prototype._handle_change_81_1 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_click_81_1 = function ($event) {
+        this.markPathToRootAsCheckOnce();
+        var pd_81_0 = (this.context.onFilter('money') !== false);
+        return (true && pd_81_0);
+    };
+    _View_ViewDataComponent0.prototype._handle_change_81_2 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_81_0 = (this._SelectControlValueAccessor_81_3.context.onChange($event.target.value) !== false);
         return (true && pd_81_0);
     };
-    _View_ViewDataComponent0.prototype._handle_blur_81_2 = function ($event) {
+    _View_ViewDataComponent0.prototype._handle_blur_81_3 = function ($event) {
         this.markPathToRootAsCheckOnce();
         var pd_81_0 = (this._SelectControlValueAccessor_81_3.context.onTouched() !== false);
         return (true && pd_81_0);
