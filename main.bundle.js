@@ -20182,7 +20182,7 @@ var Auth = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_toPromise__ = __webpack_require__(576);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_data__ = __webpack_require__(391);
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return DataService; });
 
 
@@ -20213,7 +20213,7 @@ var DataService = (function () {
     DataService.prototype.createRec = function (rec) {
         var no;
         if (rec == null) {
-            rec = new __WEBPACK_IMPORTED_MODULE_2__data__["a" /* Data */]();
+            rec = new __WEBPACK_IMPORTED_MODULE_2__shared_data__["a" /* Data */]();
             rec.no = 0;
             rec.date = (new Date()).toLocaleDateString();
             rec.car = "АХ 1367 ВI";
@@ -27190,11 +27190,17 @@ var RouterPreloader = (function () {
 var EditDataComponent = (function () {
     function EditDataComponent() {
     }
-    EditDataComponent.prototype.calc = function () {
-        this.data.fuel = Math.round((this.data.km * 0.5 + this.data.workTime * 17) * 10) / 10;
-        this.data.salary = Math.round(this.data.weight * 20);
-        this.data.cost = Math.round(this.data.fuel * 20 + this.data.salary);
-        this.data.money = Math.ceil(this.data.cost / 100) * 100;
+    EditDataComponent.prototype.calc = function (what) {
+        switch (what) {
+            case undefined:
+                this.data.fuel = Math.round((this.data.km * 0.5 + this.data.workTime * 17) * 10) / 10;
+            case "fuel":
+                this.data.salary = Math.round(this.data.weight * 20);
+            case "salary":
+                this.data.cost = Math.round(this.data.fuel * 20 + this.data.salary);
+            case "cost":
+                this.data.money = Math.ceil(this.data.cost / 100) * 100;
+        }
     };
     return EditDataComponent;
 }());
@@ -37330,7 +37336,7 @@ var styles = [''];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core_src_linker_view_type__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core_src_change_detection_change_detection__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__auth_service__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__service_auth_service__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core_src_metadata_view__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_core_src_linker_component_factory__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component_css_shim__ = __webpack_require__(381);
@@ -37413,7 +37419,7 @@ var _View_AppComponent_Host0 = (function (_super) {
         this._el_0 = __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["selectOrCreateRenderHostElement"](this.renderer, 'app-root', __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["EMPTY_INLINE_ARRAY"], rootSelector, null);
         this._appEl_0 = new __WEBPACK_IMPORTED_MODULE_2__angular_core_src_linker_element__["a" /* AppElement */](0, null, this, this._el_0);
         var compView_0 = viewFactory_AppComponent0(this.viewUtils, this.injector(0), this._appEl_0);
-        this._AppComponent_0_4 = new Wrapper_AppComponent(this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_6__auth_service__["a" /* Auth */]));
+        this._AppComponent_0_4 = new Wrapper_AppComponent(this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_6__service_auth_service__["a" /* Auth */]));
         this._appEl_0.initComponent(this._AppComponent_0_4.context, [], compView_0);
         compView_0.create(this._AppComponent_0_4.context, this.projectableNodes, null);
         this.init([].concat([this._el_0]), [this._el_0], [], []);
@@ -37723,7 +37729,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_core_src_linker_view_utils__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_platform_browser_src_browser_title__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__angular_forms_src_directives_radio_control_value_accessor__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__in_memory_data_service__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__service_in_memory_data_service__ = __webpack_require__(390);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__angular_http_src_base_request_options__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__angular_http_src_backends_browser_xhr__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__angular_http_src_base_response_options__ = __webpack_require__(87);
@@ -37732,11 +37738,11 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__angular_router_src_router_outlet_map__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__angular_core_src_linker_system_js_ng_module_factory_loader__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__angular_router_src_router_preloader__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__auth_service__ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__data_service__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__input_data_component_ngfactory__ = __webpack_require__(391);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__view_data_component_ngfactory__ = __webpack_require__(394);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__app_component_ngfactory__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__service_auth_service__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__service_data_service__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__input_data_input_data_component_ngfactory__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__view_data_view_data_component_ngfactory__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__app_comp_app_component_ngfactory__ = __webpack_require__(382);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__angular_core_src_application_tokens__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__angular_platform_browser_src_dom_events_dom_events__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__angular_platform_browser_src_dom_events_key_events__ = __webpack_require__(172);
@@ -37744,8 +37750,8 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__angular_platform_browser_src_dom_debug_ng_probe__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__angular_common_src_location_platform_location__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__angular_common_src_location_location_strategy__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__input_data_component__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__view_data_component__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__input_data_input_data_component__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__view_data_view_data_component__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__angular_router_src_router__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__angular_core_src_console__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__angular_core_src_i18n_tokens__ = __webpack_require__(155);
@@ -37842,10 +37848,10 @@ var AppModuleInjector = (function (_super) {
     __extends(AppModuleInjector, _super);
     function AppModuleInjector(parent) {
         _super.call(this, parent, [
-            __WEBPACK_IMPORTED_MODULE_34__input_data_component_ngfactory__["a" /* InputDataComponentNgFactory */],
-            __WEBPACK_IMPORTED_MODULE_35__view_data_component_ngfactory__["a" /* ViewDataComponentNgFactory */],
-            __WEBPACK_IMPORTED_MODULE_36__app_component_ngfactory__["a" /* AppComponentNgFactory */]
-        ], [__WEBPACK_IMPORTED_MODULE_36__app_component_ngfactory__["a" /* AppComponentNgFactory */]]);
+            __WEBPACK_IMPORTED_MODULE_34__input_data_input_data_component_ngfactory__["a" /* InputDataComponentNgFactory */],
+            __WEBPACK_IMPORTED_MODULE_35__view_data_view_data_component_ngfactory__["a" /* ViewDataComponentNgFactory */],
+            __WEBPACK_IMPORTED_MODULE_36__app_comp_app_component_ngfactory__["a" /* AppComponentNgFactory */]
+        ], [__WEBPACK_IMPORTED_MODULE_36__app_comp_app_component_ngfactory__["a" /* AppComponentNgFactory */]]);
     }
     Object.defineProperty(AppModuleInjector.prototype, "_LOCALE_ID_10", {
         get: function () {
@@ -38064,7 +38070,7 @@ var AppModuleInjector = (function (_super) {
     Object.defineProperty(AppModuleInjector.prototype, "_InMemoryDbService_35", {
         get: function () {
             if ((this.__InMemoryDbService_35 == null)) {
-                (this.__InMemoryDbService_35 = new __WEBPACK_IMPORTED_MODULE_23__in_memory_data_service__["a" /* InMemoryDataService */]());
+                (this.__InMemoryDbService_35 = new __WEBPACK_IMPORTED_MODULE_23__service_in_memory_data_service__["a" /* InMemoryDataService */]());
             }
             return this.__InMemoryDbService_35;
         },
@@ -38207,11 +38213,11 @@ var AppModuleInjector = (function (_super) {
                 (this.__ROUTES_49 = [[
                         {
                             path: 'input',
-                            component: __WEBPACK_IMPORTED_MODULE_44__input_data_component__["a" /* InputDataComponent */]
+                            component: __WEBPACK_IMPORTED_MODULE_44__input_data_input_data_component__["a" /* InputDataComponent */]
                         },
                         {
                             path: 'view',
-                            component: __WEBPACK_IMPORTED_MODULE_45__view_data_component__["a" /* ViewDataComponent */]
+                            component: __WEBPACK_IMPORTED_MODULE_45__view_data_view_data_component__["a" /* ViewDataComponent */]
                         },
                         {
                             path: '',
@@ -38269,7 +38275,7 @@ var AppModuleInjector = (function (_super) {
     Object.defineProperty(AppModuleInjector.prototype, "_Auth_57", {
         get: function () {
             if ((this.__Auth_57 == null)) {
-                (this.__Auth_57 = new __WEBPACK_IMPORTED_MODULE_32__auth_service__["a" /* Auth */]());
+                (this.__Auth_57 = new __WEBPACK_IMPORTED_MODULE_32__service_auth_service__["a" /* Auth */]());
             }
             return this.__Auth_57;
         },
@@ -38279,7 +38285,7 @@ var AppModuleInjector = (function (_super) {
     Object.defineProperty(AppModuleInjector.prototype, "_DataService_58", {
         get: function () {
             if ((this.__DataService_58 == null)) {
-                (this.__DataService_58 = new __WEBPACK_IMPORTED_MODULE_33__data_service__["a" /* DataService */](this._Http_39));
+                (this.__DataService_58 = new __WEBPACK_IMPORTED_MODULE_33__service_data_service__["a" /* DataService */](this._Http_39));
             }
             return this.__DataService_58;
         },
@@ -38478,10 +38484,10 @@ var AppModuleInjector = (function (_super) {
         if ((token === __WEBPACK_IMPORTED_MODULE_37__angular_core_src_application_tokens__["c" /* APP_BOOTSTRAP_LISTENER */])) {
             return this._APP_BOOTSTRAP_LISTENER_56;
         }
-        if ((token === __WEBPACK_IMPORTED_MODULE_32__auth_service__["a" /* Auth */])) {
+        if ((token === __WEBPACK_IMPORTED_MODULE_32__service_auth_service__["a" /* Auth */])) {
             return this._Auth_57;
         }
-        if ((token === __WEBPACK_IMPORTED_MODULE_33__data_service__["a" /* DataService */])) {
+        if ((token === __WEBPACK_IMPORTED_MODULE_33__service_data_service__["a" /* DataService */])) {
             return this._DataService_58;
         }
         return notFoundResult;
@@ -38500,8 +38506,8 @@ var AppModuleNgFactory = new __WEBPACK_IMPORTED_MODULE_0__angular_core_src_linke
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rxjs_extensions__ = __webpack_require__(392);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rxjs_extensions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__rxjs_extensions__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shared_rxjs_extensions__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shared_rxjs_extensions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__shared_rxjs_extensions__);
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return AppModule; });
 
 var AppModule = (function () {
@@ -38516,19 +38522,6 @@ var AppModule = (function () {
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return Data; });
-var Data = (function () {
-    function Data() {
-    }
-    return Data;
-}());
-//# sourceMappingURL=/home/vs/Work/my-app/src/data.js.map
-
-/***/ },
-/* 387 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return styles; });
 /**
  * This file is generated by the Angular 2 template compiler.
@@ -38539,7 +38532,7 @@ var styles = ['.label[_ngcontent-%COMP%] {\n    width: 13em;\n    display: inlin
 //# sourceMappingURL=/home/vs/Work/my-app/src/edit-data.component.css.shim.js.map
 
 /***/ },
-/* 388 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38551,7 +38544,7 @@ var styles = ['.label[_ngcontent-%COMP%] {\n    width: 13em;\n    display: inlin
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core_src_linker_view_type__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_core_src_metadata_view__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core_src_linker_component_factory__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__edit_data_component_css_shim__ = __webpack_require__(387);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__edit_data_component_css_shim__ = __webpack_require__(386);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__node_modules_angular_common_src_directives_ng_if_ngfactory__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_core_src_linker_template_ref__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common_src_directives_ng_if__ = __webpack_require__(101);
@@ -39728,7 +39721,7 @@ var _View_EditDataComponent7 = (function (_super) {
     };
     _View_EditDataComponent7.prototype._handle_keyup_2_1 = function ($event) {
         this.markPathToRootAsCheckOnce();
-        var pd_2_0 = (this.parent.context.calc() !== false);
+        var pd_2_0 = (this.parent.context.calc('fuel') !== false);
         return (true && pd_2_0);
     };
     _View_EditDataComponent7.prototype._handle_input_2_2 = function ($event) {
@@ -39839,7 +39832,7 @@ var _View_EditDataComponent8 = (function (_super) {
     };
     _View_EditDataComponent8.prototype._handle_keyup_2_1 = function ($event) {
         this.markPathToRootAsCheckOnce();
-        var pd_2_0 = (this.parent.context.calc() !== false);
+        var pd_2_0 = (this.parent.context.calc('salary') !== false);
         return (true && pd_2_0);
     };
     _View_EditDataComponent8.prototype._handle_input_2_2 = function ($event) {
@@ -39950,7 +39943,7 @@ var _View_EditDataComponent9 = (function (_super) {
     };
     _View_EditDataComponent9.prototype._handle_keyup_2_1 = function ($event) {
         this.markPathToRootAsCheckOnce();
-        var pd_2_0 = (this.parent.context.calc() !== false);
+        var pd_2_0 = (this.parent.context.calc('cost') !== false);
         return (true && pd_2_0);
     };
     _View_EditDataComponent9.prototype._handle_input_2_2 = function ($event) {
@@ -40082,36 +40075,7 @@ function viewFactory_EditDataComponent10(viewUtils, parentInjector, declarationE
 //# sourceMappingURL=/home/vs/Work/my-app/src/edit-data.component.ngfactory.js.map
 
 /***/ },
-/* 389 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return InMemoryDataService; });
-var InMemoryDataService = (function () {
-    function InMemoryDataService() {
-    }
-    InMemoryDataService.prototype.createDb = function () {
-        var data = [
-            { no: 1, date: "10/10/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 10, km: 30, workTime: 0.5, fuel: 23.5, salary: 200, cost: 670, money: 700 },
-            { no: 2, date: "10/10/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 5, km: 25, workTime: 0.7, fuel: 24.4, salary: 100, cost: 588, money: 600 },
-            { no: 3, date: "10/11/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 8, km: 50, workTime: 1, fuel: 42, salary: 160, cost: 1000, money: 1000 },
-            { no: 4, date: "10/11/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 3.8, km: 10, workTime: 0.5, fuel: 13.5, salary: 76, cost: 346, money: 400 },
-            { no: 5, date: "10/12/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 6, km: 20, workTime: 0.2, fuel: 13.4, salary: 120, cost: 388, money: 400 },
-            { no: 6, date: "10/12/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 7.8, km: 38, workTime: 1.3, fuel: 41.1, salary: 156, cost: 978, money: 1000 },
-            { no: 7, date: "10/13/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 8.3, km: 23, workTime: 0.8, fuel: 25.1, salary: 166, cost: 668, money: 700 },
-            { no: 8, date: "10/13/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 5, km: 20, workTime: 1, fuel: 27, salary: 100, cost: 640, money: 700 },
-            { no: 9, date: "10/13/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 6.3, km: 18, workTime: 0.5, fuel: 17.5, salary: 126, cost: 476, money: 500 },
-            { no: 10, date: "10/14/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 8, km: 10, workTime: 0.5, fuel: 13.5, salary: 160, cost: 430, money: 500 },
-            { no: 11, date: "10/14/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 12.8, km: 13, workTime: 0.7, fuel: 18.4, salary: 256, cost: 624, money: 700 }
-        ];
-        return { data: data };
-    };
-    return InMemoryDataService;
-}());
-//# sourceMappingURL=/home/vs/Work/my-app/src/in-memory-data.service.js.map
-
-/***/ },
-/* 390 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40125,7 +40089,7 @@ var styles = ['.table[_ngcontent-%COMP%] {\n    -moz-user-select: none;\n    -kh
 //# sourceMappingURL=/home/vs/Work/my-app/src/input-data.component.css.shim.js.map
 
 /***/ },
-/* 391 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40135,16 +40099,16 @@ var styles = ['.table[_ngcontent-%COMP%] {\n    -moz-user-select: none;\n    -kh
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core_src_linker_view_type__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core_src_change_detection_change_detection__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__data_service__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_service__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__service_data_service__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__service_auth_service__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_core_src_metadata_view__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_core_src_linker_component_factory__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__input_data_component_css_shim__ = __webpack_require__(390);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__edit_data_component_ngfactory__ = __webpack_require__(388);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__input_data_component_css_shim__ = __webpack_require__(388);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__edit_data_edit_data_component_ngfactory__ = __webpack_require__(387);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__node_modules_angular_common_src_directives_ng_for_ngfactory__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_core_src_linker_template_ref__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__angular_core_src_change_detection_differs_iterable_differs__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__edit_data_component__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__edit_data_edit_data_component__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__angular_common_src_directives_ng_for__ = __webpack_require__(100);
 /* unused harmony export Wrapper_InputDataComponent */
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return InputDataComponentNgFactory; });
@@ -40205,7 +40169,7 @@ var _View_InputDataComponent_Host0 = (function (_super) {
         this._el_0 = __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["selectOrCreateRenderHostElement"](this.renderer, 'input-data', __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["EMPTY_INLINE_ARRAY"], rootSelector, null);
         this._appEl_0 = new __WEBPACK_IMPORTED_MODULE_2__angular_core_src_linker_element__["a" /* AppElement */](0, null, this, this._el_0);
         var compView_0 = viewFactory_InputDataComponent0(this.viewUtils, this.injector(0), this._appEl_0);
-        this._InputDataComponent_0_4 = new Wrapper_InputDataComponent(this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_6__data_service__["a" /* DataService */]), this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_7__auth_service__["a" /* Auth */]));
+        this._InputDataComponent_0_4 = new Wrapper_InputDataComponent(this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_6__service_data_service__["a" /* DataService */]), this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_7__service_auth_service__["a" /* Auth */]));
         this._appEl_0.initComponent(this._InputDataComponent_0_4.context, [], compView_0);
         compView_0.create(this._InputDataComponent_0_4.context, this.projectableNodes, null);
         this.init([].concat([this._el_0]), [this._el_0], [], []);
@@ -40251,8 +40215,8 @@ var _View_InputDataComponent0 = (function (_super) {
         this._text_2 = this.renderer.createText(parentRenderNode, '\n', null);
         this._el_3 = __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["createRenderElement"](this.renderer, parentRenderNode, 'edit-data', __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["EMPTY_INLINE_ARRAY"], null);
         this._appEl_3 = new __WEBPACK_IMPORTED_MODULE_2__angular_core_src_linker_element__["a" /* AppElement */](3, null, this, this._el_3);
-        var compView_3 = __WEBPACK_IMPORTED_MODULE_11__edit_data_component_ngfactory__["a" /* viewFactory_EditDataComponent0 */](this.viewUtils, this.injector(3), this._appEl_3);
-        this._EditDataComponent_3_4 = new __WEBPACK_IMPORTED_MODULE_11__edit_data_component_ngfactory__["b" /* Wrapper_EditDataComponent */]();
+        var compView_3 = __WEBPACK_IMPORTED_MODULE_11__edit_data_edit_data_component_ngfactory__["a" /* viewFactory_EditDataComponent0 */](this.viewUtils, this.injector(3), this._appEl_3);
+        this._EditDataComponent_3_4 = new __WEBPACK_IMPORTED_MODULE_11__edit_data_edit_data_component_ngfactory__["b" /* Wrapper_EditDataComponent */]();
         this._appEl_3.initComponent(this._EditDataComponent_3_4.context, [], compView_3);
         compView_3.create(this._EditDataComponent_3_4.context, [], null);
         this._text_4 = this.renderer.createText(parentRenderNode, '\n', null);
@@ -40404,7 +40368,7 @@ var _View_InputDataComponent0 = (function (_super) {
         return null;
     };
     _View_InputDataComponent0.prototype.injectorGetInternal = function (token, requestNodeIndex, notFoundResult) {
-        if (((token === __WEBPACK_IMPORTED_MODULE_15__edit_data_component__["a" /* EditDataComponent */]) && (3 === requestNodeIndex))) {
+        if (((token === __WEBPACK_IMPORTED_MODULE_15__edit_data_edit_data_component__["a" /* EditDataComponent */]) && (3 === requestNodeIndex))) {
             return this._EditDataComponent_3_4.context;
         }
         if (((token === __WEBPACK_IMPORTED_MODULE_13__angular_core_src_linker_template_ref__["b" /* TemplateRef */]) && (65 === requestNodeIndex))) {
@@ -40644,6 +40608,48 @@ function viewFactory_InputDataComponent1(viewUtils, parentInjector, declarationE
 //# sourceMappingURL=/home/vs/Work/my-app/src/input-data.component.ngfactory.js.map
 
 /***/ },
+/* 390 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return InMemoryDataService; });
+var InMemoryDataService = (function () {
+    function InMemoryDataService() {
+    }
+    InMemoryDataService.prototype.createDb = function () {
+        var data = [
+            { no: 1, date: "10/10/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 10, km: 30, workTime: 0.5, fuel: 23.5, salary: 200, cost: 670, money: 700 },
+            { no: 2, date: "10/10/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 5, km: 25, workTime: 0.7, fuel: 24.4, salary: 100, cost: 588, money: 600 },
+            { no: 3, date: "10/11/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 8, km: 50, workTime: 1, fuel: 42, salary: 160, cost: 1000, money: 1000 },
+            { no: 4, date: "10/11/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 3.8, km: 10, workTime: 0.5, fuel: 13.5, salary: 76, cost: 346, money: 400 },
+            { no: 5, date: "10/12/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 6, km: 20, workTime: 0.2, fuel: 13.4, salary: 120, cost: 388, money: 400 },
+            { no: 6, date: "10/12/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 7.8, km: 38, workTime: 1.3, fuel: 41.1, salary: 156, cost: 978, money: 1000 },
+            { no: 7, date: "10/13/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 8.3, km: 23, workTime: 0.8, fuel: 25.1, salary: 166, cost: 668, money: 700 },
+            { no: 8, date: "10/13/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 5, km: 20, workTime: 1, fuel: 27, salary: 100, cost: 640, money: 700 },
+            { no: 9, date: "10/13/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 6.3, km: 18, workTime: 0.5, fuel: 17.5, salary: 126, cost: 476, money: 500 },
+            { no: 10, date: "10/14/2016", car: "АХ 3036 АМ", driver: "Стасенко А.Е.", weight: 8, km: 10, workTime: 0.5, fuel: 13.5, salary: 160, cost: 430, money: 500 },
+            { no: 11, date: "10/14/2016", car: "АХ 1367 ВI", driver: "Плотников С.Л.", weight: 12.8, km: 13, workTime: 0.7, fuel: 18.4, salary: 256, cost: 624, money: 700 }
+        ];
+        return { data: data };
+    };
+    return InMemoryDataService;
+}());
+//# sourceMappingURL=/home/vs/Work/my-app/src/in-memory-data.service.js.map
+
+/***/ },
+/* 391 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return Data; });
+var Data = (function () {
+    function Data() {
+    }
+    return Data;
+}());
+//# sourceMappingURL=/home/vs/Work/my-app/src/data.js.map
+
+/***/ },
 /* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40702,7 +40708,7 @@ var styles = ['.button[_ngcontent-%COMP%] {\n    width: 100%;\n}\n.tablerow[_ngc
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core_src_linker_view_type__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core_src_change_detection_change_detection__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__data_service__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__service_data_service__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core_src_metadata_view__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_core_src_linker_component_factory__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__view_data_component_css_shim__ = __webpack_require__(393);
@@ -40788,7 +40794,7 @@ var _View_ViewDataComponent_Host0 = (function (_super) {
         this._el_0 = __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["selectOrCreateRenderHostElement"](this.renderer, 'view-data', __WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["EMPTY_INLINE_ARRAY"], rootSelector, null);
         this._appEl_0 = new __WEBPACK_IMPORTED_MODULE_2__angular_core_src_linker_element__["a" /* AppElement */](0, null, this, this._el_0);
         var compView_0 = viewFactory_ViewDataComponent0(this.viewUtils, this.injector(0), this._appEl_0);
-        this._ViewDataComponent_0_4 = new Wrapper_ViewDataComponent(this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_6__data_service__["a" /* DataService */]));
+        this._ViewDataComponent_0_4 = new Wrapper_ViewDataComponent(this.parentInjector.get(__WEBPACK_IMPORTED_MODULE_6__service_data_service__["a" /* DataService */]));
         this._appEl_0.initComponent(this._ViewDataComponent_0_4.context, [], compView_0);
         compView_0.create(this._ViewDataComponent_0_4.context, this.projectableNodes, null);
         this.init([].concat([this._el_0]), [this._el_0], [], []);
